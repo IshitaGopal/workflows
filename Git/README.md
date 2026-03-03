@@ -1,5 +1,6 @@
 # Git
 
+
 ## Configuring your Git Profile
 
 You need to configure your git client so your commits are attributed to you
@@ -27,7 +28,7 @@ git config --global user.email "ishitagopal@gmail.com"
 - So, if you want to set it only for one repository (not globally), you’d run the following in the repo folder without ```--global```
 
 ```
-git config --global user.email "ishitagopal@gmail.com"
+git config user.email "ishitagopal@gmail.com"
 ```
 
 ## Set up SSH key-based authentication for GitHub
@@ -51,8 +52,7 @@ cat id_rsa.pub
 ssh -T git@github.com
 ```
 
-**Notes:**
-- *The test should return: Hi IshitaGopal! You've successfully authenticated, but GitHub does not provide shell access.*
+**Note:** *The test should return: Hi IshitaGopal! You've successfully authenticated, but GitHub does not provide shell access.*
 
 
 
@@ -75,30 +75,6 @@ uv init xyz
 
 ```
 git clone path/to/repo
-
-```
-
-## Attach your local repo to GitHub 
-1. Create a new repository called workflows. Go to GitHub → click New Repository → name it workflows → don’t initialize with README (since you already have a local repo).
-
-2. Add the remote repository in your local repository. This uploads your local commits to the remote repository. The remote is named "origin" by convention.
-```
-git remote add origin https://github.com/username/workflows.git
-```
-3. Check the remote repository
-```
-git remote -v
-```
-4. Push the local changes on our repository to the GitHub repository. Takes a copy of my repository and pushes it to GitHub.
-```
-git push -u origin main
-
-```
-- -u sets origin/main as the default upstream branch, so future pushes are simpler.
-
-5. Once the upstream is set, when you push changes to GitHub in the future you simply run:
-```
-git push
 
 ```
 
@@ -128,6 +104,37 @@ git commit -m "a meaningful but short message describing the changes you made"
 git push
 ```
 
+## But before you can push, attach your local repo to GitHub 
+1. Create a new repository called workflows. Go to GitHub → click New Repository → name it workflows → don’t initialize with README (if you already have a local repo).
+
+2. Add the remote repository in your local repository. This uploads your local commits to the remote repository. The remote is named "origin" by convention.
+```
+git remote add origin https://github.com/username/workflows.git
+```
+3. Check the remote repository
+```
+git remote -v
+```
+4. Push the local changes on our repository to the GitHub repository. Takes a copy of my repository and pushes it to GitHub.
+```
+git push -u origin main
+
+```
+- -u = link local branch → remote branch (upstream).
+- It sets up a tracking relationship between your local branch and a remote branch. Git knows: “This local main branch is linked to origin/main.” 
+    Example:
+    - main → tracks origin/main 
+    - feature-1  → tracks origin/feature-1.
+    
+- This makes future pushes simpler. Without -u your would write ```git push origin main```
+
+5. Once the upstream is set, when you push changes to GitHub in the future, you simply run:
+```
+git push
+
+```
+
+
 ## Additional Commands 
 
 - Delete a file or director from the repo. Removing files via git allows them to be recovered.
@@ -151,10 +158,16 @@ git mv OLD NEW
 
 ```
 
+- Remove remote 
+```
+git remote remove origin
 
-
+```
 
 ## .gitignore 
-This file will allow us to tell git which files/directories we don't to be part of the repo ever. This is useful for keeping credentials, data etc. out of your github repo.
+This file will allow us to tell git which files/directories we don't want to be part of the repo ever. This is useful for keeping credentials, data etc. out of your github repo.
 
 
+# Github flow
+
+- https://www.youtube.com/watch?v=hG_P6IRAjNQ
