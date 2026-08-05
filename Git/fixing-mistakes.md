@@ -16,7 +16,7 @@ git log
 ```bash
 git clone <url> <where you want to clone>
 
-# Clone all the files from the <url> reo into the current directory
+# Clone all the files from the <url> repo into the current directory
 git clone <url> .
 
 # List all branches locally and remote
@@ -24,9 +24,9 @@ git branch -a
 ```
 
 ## Git Push
-- commit changes locally -> push the changes to the remote repositoryy
+- commit changes locally -> push the changes to the remote repository
 
-```
+```bash
 # Show changes to the code
 git diff
 
@@ -40,7 +40,7 @@ git push
 ```
 ## Git branch
 
-```
+```bash
 # create a branch
 git branch calc-divide
 
@@ -59,7 +59,7 @@ git push -u origin calc-divide
 
 ## Merge??
 
-```
+```bash
 git checkout master main?
 git pull
 git branch --merged
@@ -118,6 +118,20 @@ git reset calc.py
 git reset
 ```
 
+```bash
+# Undo unstaged changes (restore file to last commit)
+# This resets the file back to the last committed version.
+git restore app.py
+# Undo staged changes (remove from staging area)
+# This keeps your changes but unstages them.
+
+git restore --staged app.py
+
+# Undo both staged + unstaged changes (hard reset for a file)
+
+```
+
+
 ## Cherrypick
 - Made commit to the wrong branch
 - Move changes to a branch, revert master to initial state
@@ -175,10 +189,34 @@ hard:
 git reset --hard d63a377c
 ```
 ### Get rid of untracked files
--df: gets rid of untracked files and directory
+
+
+`-df`: gets rid of untracked files and directory
+
+`git clean` → removes untracked files
+
+`-d` → includes directories (not just files)
+
+`-f` → force (required, otherwise Git won’t run it
+
+`-n` = no action
 
 ```bash
+git clean -n
 git clean -df
+```
+### Get rid of files within a particular folder
+```bash
+# Preview what will be deleted
+git clean -n <folder>
+
+# Delete untracked files in a specific folder
+git clean -f <folder>
+
+# Include untracked directories too
+git clean -fd <folder>
+git clean -fd data/temp/
+
 ```
 
 ### Run git reset hard on files you needed
@@ -215,4 +253,69 @@ git log
 
 ```bash
 git diff d63a377c d63a37890
+```
+
+## Example: pushed commit to the wrong branch
+
+```bash
+# 1. See what's on the current (wrong) branch and confirm the commit that needs to move
+git status
+git log --oneline -3
+
+# 2. Fetch to make sure the target branch ref is up to date locally
+git fetch origin
+
+# 3. Create a local branch tracking the *correct* remote branch
+git checkout -b fix/missing-abstract-csv-322 origin/fix/missing-abstract-csv-322
+
+# 4. Cherry-pick the misplaced commit onto the correct branch
+git cherry-pick <commit-sha>
+
+# 4a. If conflicts occur, resolve them in the flagged files, then:
+git add <resolved-file>
+git cherry-pick --continue
+# (git cherry-pick --abort would bail out instead, if needed)
+
+# 5. Push the corrected branch
+git push origin fix/missing-abstract-csv-322
+
+# 6. Switch back to the branch that had the mistaken commit
+git checkout feat/csv-converter-cli-config
+
+# 7. Revert the commit there (adds a new "revert" commit — does NOT rewrite history)
+git revert --no-edit <commit-sha>
+
+# 8. Sanity-check the branch is back to its pre-mistake state
+git diff <last-good-commit> HEAD -- <affected-files>   # should be empty
+
+# 9. Push the revert
+git push origin feat/csv-converter-cli-config
+```
+
+## Example: switch to remote branch locally
+
+```bash
+git fetch origin                    # make sure you have the latest remote refs
+git checkout <branch-name>          # e.g. git checkout fix/218-verbatim-text-output
+
+```
+If the branch doesn't exist locally yet, modern git (2.23+) will auto-create a local tracking branch from origin/<branch-name> as long as the name is unambiguous — so git checkout <branch-name> alone usually just works. That's shorthand for:
+
+```git checkout -b <branch-name> origin/<branch-name>```
+
+Use the explicit -b ... origin/... form when you want to be unambiguous, or when the short form fails (e.g. name collision with a local branch, or git version too old for the auto-tracking shortcut).
+
+If you're using the newer worktree-style syntax, ```git switch <branch-name>``` is the more modern equivalent of git checkout <branch-name> for this purpose.
+
+
+
+| checkout | switch |
+|----------|----------|
+| git checkout < branch >    | git switch < branch >   |
+| git checkout -b < new >    | git switch -c < new >   |
+
+# Example untrack a file
+
+```
+git rm --cached notebooks/config.env
 ```
