@@ -1,6 +1,7 @@
 # Docker
 - https://www.youtube.com/watch?v=pg19Z8LL06w
 - https://www.youtube.com/watch?v=SXwC9fSwct8
+- https://www.youtube.com/watch?v=zFa9_K8BS8I&t=801s
 
 
 ## When you install Docker Desktop, you get:
@@ -126,7 +127,7 @@ Say an application is ready  and we want to make it available to users by runnin
 - All **directives are written in caps**. 
 - We map everything we would do to run the application locally inside the container -- write any linux command 
 - `RUN`: Will execute any command in a shell inside the container environment.
-- Next, we need application code →  take files from local folder and copy them into the container.
+- Next, we need application code → take files from local folder and copy them into the container.
 - `WORKDIR`:
 - `CMD`: 
 
