@@ -59,6 +59,23 @@ python -m http.server 8000 --bind 127.0.0.1
 Ctrl + C
 ```
 
+### If something else is running on the port
+
+List all processes using network connections on port 8000
+
+```
+1.
+# lsof = “list open files”
+# i = show network-related files (internet connections)
+# :8000 = filter for port 8000
+
+lsof -i :8000
+
+2.
+# kill it
+kill <PID>
+```
+
 ---
 
 ## What you get

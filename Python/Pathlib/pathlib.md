@@ -109,3 +109,76 @@ filesystem operations beyond the basics, reach for `os` or `shutil` instead:
 - Getting/setting environment variables → `os`
 - Copying files → `shutil`
 - Deleting non-empty folders (recursively) → `shutil.rmtree`
+
+
+
+<!-- # # Pathlib
+# Path(__file__).resolve().parent().parent()
+
+# my_dir = Path("scripts")
+# my_file = Path("notebooks/irr.ipynb")
+# my_dir.name
+# my_dir.suffix  # '.ipynb'
+# my_dir.name  # 'irr'
+# new_file.parent  # get parent dir
+# # create a file
+# new_file = my_dir / "new_file.txt"
+# # does it exist?
+# new_file.exists()
+# new_file.absolute()  # get absolute or resolve
+# new_file.resolve()  # use this most of the times -- always usually want to resolve the paths instead of getting the PAth
+
+# # When you want to access the home folder
+# Path("~/.ssh").resolve()  # will not work well. Instaed use
+# Path(
+#     "~/.ssh"
+# ).expanduser()  # Dont use when creating from scratch only if the file exists
+# # instead use:
+# dotfiles = Path.home() / "dotfiles.txt"
+
+# # search using glob
+# for p in dotfiles.glob("*vscode*"):
+#     print(p)
+
+# # recursive glob = rglob
+# for p in dotfiles.rglob("*vscode*", case_sensitive=False):
+#     print(p)
+
+# for p in dotfiles.rglob("*.json", case_sensitive=False):
+#     print(p)
+
+# # open file
+# with dotfiles.open() as f:
+#     print(f.read())
+
+
+# with open(dotfiles) as f:
+#     print(f.read())
+ -->
+
+<!-- # # Limited ability to create move and delete
+# p = Path("TempDir")
+# p.mkdir(exist_ok=True)
+# p.rmdir()  # delete dir - only removes empty dirs
+
+# # make sub dir
+# p = Path("TempDir/SubDir")
+# p.mkdir(parents=True)
+
+# # Create file
+# # Over writes be carefule
+# p = Path("TempFile.txt")
+# p.touch()
+# # Rename
+# p.rename("tempfile.txt")
+# p.replace("temp_file.txt")  # better
+
+# # remove a file
+# p = Path("temp_file.txt")
+# p.unlink()
+
+# # When to not use Pathlib - shutil, os
+# # use Path only for paths
+# # getting env variables
+# # copying files
+# # deleting folders -->
