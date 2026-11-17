@@ -1,0 +1,1960 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Notes on developer tools and Python">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../terminal/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Fixing Git mistakes - Workflows</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fixing-git-mistakes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Workflows" class="md-header__button md-logo" aria-label="Workflows" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Workflows
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fixing Git mistakes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Workflows" class="md-nav__button md-logo" aria-label="Workflows" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Workflows
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../terminal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fixing Git mistakes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fixing Git mistakes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#git-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git clone
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git push
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git branch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merge-and-delete-a-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merge and delete a branch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Merge and delete a branch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#made-changes-to-a-file-but-dont-want-to-keep-any-of-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Made changes to a file but don't want to keep any of them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#badwrong-commit-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bad/wrong commit message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accidentally-left-out-a-file-we-meant-to-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accidentally left out a file we meant to commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-files-from-the-staging-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove files from the staging area
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cherry-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cherry-pick
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git reset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git reset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-rid-of-untracked-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get rid of untracked files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-rid-of-files-within-a-particular-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get rid of files within a particular folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-git-reset-hard-on-files-you-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run git reset hard on files you needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-may-not-be-totally-out-of-luck-if-a-lot-of-time-has-not-passed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        - May not be totally out of luck if a lot of time has not passed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="- May not be totally out of luck if a lot of time has not passed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-revert-undo-commit-but-other-people-have-pulled-the-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git revert : Undo commit but other people have pulled the changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-pushed-commit-to-the-wrong-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: pushed commit to the wrong branch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-switch-to-remote-branch-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: switch to remote branch locally
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../networks/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../python/apis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/async/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Async
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/oauth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OAuth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/pathlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pathlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/project-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../python/pydantic/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pydantic
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pydantic
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/pydantic/computed-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computed fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/re-module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    re module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#git-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git clone
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git push
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git branch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merge-and-delete-a-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merge and delete a branch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Merge and delete a branch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#made-changes-to-a-file-but-dont-want-to-keep-any-of-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Made changes to a file but don't want to keep any of them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#badwrong-commit-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bad/wrong commit message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accidentally-left-out-a-file-we-meant-to-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accidentally left out a file we meant to commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-files-from-the-staging-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove files from the staging area
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cherry-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cherry-pick
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git reset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git reset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-rid-of-untracked-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get rid of untracked files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-rid-of-files-within-a-particular-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get rid of files within a particular folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-git-reset-hard-on-files-you-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run git reset hard on files you needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-may-not-be-totally-out-of-luck-if-a-lot-of-time-has-not-passed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        - May not be totally out of luck if a lot of time has not passed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="- May not be totally out of luck if a lot of time has not passed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-revert-undo-commit-but-other-people-have-pulled-the-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git revert : Undo commit but other people have pulled the changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-pushed-commit-to-the-wrong-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: pushed commit to the wrong branch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-switch-to-remote-branch-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: switch to remote branch locally
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="fixing-git-mistakes">Fixing Git mistakes<a class="headerlink" href="#fixing-git-mistakes" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p>https://www.youtube.com/watch?v=FdZecVxzJbk&amp;list=PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx&amp;index=2</p>
+</li>
+<li>
+<p>"Working directory is clean" msg = no untracked/modified files</p>
+</li>
+</ul>
+<h2 id="git-log">Git log<a class="headerlink" href="#git-log" title="Permanent link">&para;</a></h2>
+<p><div class="highlight"><pre><span></span><code>git<span class="w"> </span>log
+</code></pre></div>
+- gives a hash number of each commit
+- all hashes are unique
+- Provides the author who made the commit + the msg
+-</p>
+<h2 id="git-clone">Git clone<a class="headerlink" href="#git-clone" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>&lt;url&gt;<span class="w"> </span>&lt;where<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>clone&gt;
+
+<span class="c1"># Clone all the files from the &lt;url&gt; repo into the current directory</span>
+git<span class="w"> </span>clone<span class="w"> </span>&lt;url&gt;<span class="w"> </span>.
+
+<span class="c1"># List all branches locally and remote</span>
+git<span class="w"> </span>branch<span class="w"> </span>-a
+</code></pre></div>
+<h2 id="git-push">Git push<a class="headerlink" href="#git-push" title="Permanent link">&para;</a></h2>
+<ul>
+<li>commit changes locally -&gt; push the changes to the remote repository</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># Show changes to the code</span>
+git<span class="w"> </span>diff
+
+git<span class="w"> </span>status
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"msg"</span>
+
+git<span class="w"> </span>pull
+git<span class="w"> </span>push
+</code></pre></div>
+<h2 id="git-branch">Git branch<a class="headerlink" href="#git-branch" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># create a branch</span>
+git<span class="w"> </span>branch<span class="w"> </span>calc-divide
+
+<span class="c1"># list local braches</span>
+git<span class="w"> </span>branch
+git<span class="w"> </span>checkout<span class="w"> </span>calc-divide
+
+
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Divide Function"</span>
+
+<span class="c1"># origin = name of the remote repo and the branch we want to push to</span>
+<span class="c1"># u = tells git we want to associate the local calc-divide with the remote calc-divide branch. Then in the future we just do git push and git pull.</span>
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>calc-divide
+</code></pre></div>
+<h2 id="merge-and-delete-a-branch">Merge and delete a branch<a class="headerlink" href="#merge-and-delete-a-branch" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>master<span class="w"> </span>main?
+git<span class="w"> </span>pull
+git<span class="w"> </span>branch<span class="w"> </span>--merged
+git<span class="w"> </span>merge<span class="w"> </span>calc-divide
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>master
+
+<span class="c1"># delete branch</span>
+git<span class="w"> </span>branch<span class="w"> </span>--merged
+git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>calc-divide
+git<span class="w"> </span>branch<span class="w"> </span>-a
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>--delete<span class="w"> </span>calc-divide
+git<span class="w"> </span>branch<span class="w"> </span>-a
+</code></pre></div>
+<h3 id="made-changes-to-a-file-but-dont-want-to-keep-any-of-them">Made changes to a file but don't want to keep any of them<a class="headerlink" href="#made-changes-to-a-file-but-dont-want-to-keep-any-of-them" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Go back to the way things were</span>
+<span class="c1"># hack hack</span>
+git<span class="w"> </span>status<span class="w"> </span><span class="c1"># shows modified</span>
+git<span class="w"> </span>diff<span class="w"> </span><span class="c1"># shows differences</span>
+<span class="c1"># Clean working directory</span>
+git<span class="w"> </span>checkout
+</code></pre></div>
+<h3 id="badwrong-commit-message">Bad/wrong commit message<a class="headerlink" href="#badwrong-commit-message" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Change the message without creating another commit</li>
+<li><code>--ammend</code> unique hash is different/changed</li>
+<li>When the hash changes -&gt; means it chaged the git history. We only want to do this if we are the only ones who have had access to the changes. If we pushed the changes for other users to see, we do not want to change the hsistory because it can cause problems. There are other ways to make corrections without changing the git history. But this is ok to do if we are the only ones who has seen it. Also leads to cleaner commits.</li>
+<li>mostly do this only when you have not pushed your changes to other people</li>
+</ul>
+<h3 id="accidentally-left-out-a-file-we-meant-to-commit">Accidentally left out a file we meant to commit<a class="headerlink" href="#accidentally-left-out-a-file-we-meant-to-commit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Make it part of the last commit</span>
+git<span class="w"> </span>add<span class="w"> </span>&lt;file&gt;
+git<span class="w"> </span>commit<span class="w"> </span>--ammend
+git<span class="w"> </span>commit<span class="w"> </span>--ammend<span class="w"> </span>--no-edits
+<span class="c1"># shows files changed in the commit</span>
+git<span class="w"> </span>log<span class="w"> </span>--stat
+<span class="c1"># interactive editor</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code># Modify commit msg
+git commit --ammend -m "&lt;New Message&gt;"
+</code></pre></div>
+<h2 id="remove-files-from-the-staging-area">Remove files from the staging area<a class="headerlink" href="#remove-files-from-the-staging-area" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will remove calc.py from the staging area</span>
+<span class="c1"># Put it in untracked files</span>
+git<span class="w"> </span>reset<span class="w"> </span>calc.py
+
+<span class="c1"># Remove everything from the staging area</span>
+git<span class="w"> </span>reset
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Undo unstaged changes (restore file to last commit)</span>
+<span class="c1"># This resets the file back to the last committed version.</span>
+git<span class="w"> </span>restore<span class="w"> </span>app.py
+<span class="c1"># Undo staged changes (remove from staging area)</span>
+<span class="c1"># This keeps your changes but unstages them.</span>
+
+git<span class="w"> </span>restore<span class="w"> </span>--staged<span class="w"> </span>app.py
+
+<span class="c1"># Undo both staged + unstaged changes (hard reset for a file)</span>
+</code></pre></div>
+<h2 id="cherry-pick">Cherry-pick<a class="headerlink" href="#cherry-pick" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Made commit to the wrong branch</li>
+<li>Move changes to a branch, revert master to initial state</li>
+<li><code>cherry-pick</code> does not delete commmits</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="m">1</span>.<span class="w"> </span>git<span class="w"> </span>log
+<span class="m">2</span>.<span class="w"> </span><span class="c1"># grab the hash of the commit we want to pick</span>
+<span class="w">   </span><span class="c1"># (6-7 characters from the hash is fine..dont have to copy the whole thing)</span>
+<span class="m">3</span>.<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>subtract-feature
+<span class="m">4</span>.<span class="w"> </span>git<span class="w"> </span>cherry-pick<span class="w"> </span>&lt;hash&gt;
+<span class="m">5</span>.<span class="w"> </span>git<span class="w"> </span>log
+<span class="c1"># This does not delete commits on the main</span>
+<span class="m">6</span>.<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>main
+<span class="m">7</span>.<span class="w"> </span>git<span class="w"> </span>log
+<span class="m">8</span>.<span class="w"> </span>git<span class="w"> </span>reset<span class="w"> </span>--hard
+</code></pre></div>
+<h2 id="git-reset">Git reset<a class="headerlink" href="#git-reset" title="Permanent link">&para;</a></h2>
+<p>soft:
+- reset back to the commit we specify + keeps changes in the staging directory
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>log
+
+<span class="c1"># grab the hash of the commit you want to go to try to return to the initial commit</span>
+git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>d63a377
+
+<span class="c1"># Will no longer show the second commit</span>
+git<span class="w"> </span>log
+
+<span class="c1"># But it keeps the changes in the staging directory</span>
+git<span class="w"> </span>status
+</code></pre></div></p>
+<p>mixed:
+- default
+keeps the changes but the changes are in the working directory
+<div class="highlight"><pre><span></span><code><span class="c1"># default</span>
+git<span class="w"> </span>log
+git<span class="w"> </span>reset<span class="w"> </span>d63a377c
+git<span class="w"> </span>log
+<span class="c1"># Keeps the changes are in the working dir not the staging area</span>
+git<span class="w"> </span>status
+</code></pre></div></p>
+<p>hard:
+- CAREFUL WITH THIS!
+- Will make all the tracked files match the state they were in at the hash we specify
+- It leaves untracked files alone
+- Gets rid of changes</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>d63a377c
+</code></pre></div>
+<h3 id="get-rid-of-untracked-files">Get rid of untracked files<a class="headerlink" href="#get-rid-of-untracked-files" title="Permanent link">&para;</a></h3>
+<p><code>-df</code>: gets rid of untracked files and directory</p>
+<p><code>git clean</code> → removes untracked files</p>
+<p><code>-d</code> → includes directories (not just files)</p>
+<p><code>-f</code> → force (required, otherwise Git won’t run it</p>
+<p><code>-n</code> = no action</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clean<span class="w"> </span>-n
+git<span class="w"> </span>clean<span class="w"> </span>-df
+</code></pre></div>
+<h3 id="get-rid-of-files-within-a-particular-folder">Get rid of files within a particular folder<a class="headerlink" href="#get-rid-of-files-within-a-particular-folder" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Preview what will be deleted</span>
+git<span class="w"> </span>clean<span class="w"> </span>-n<span class="w"> </span>&lt;folder&gt;
+
+<span class="c1"># Delete untracked files in a specific folder</span>
+git<span class="w"> </span>clean<span class="w"> </span>-f<span class="w"> </span>&lt;folder&gt;
+
+<span class="c1"># Include untracked directories too</span>
+git<span class="w"> </span>clean<span class="w"> </span>-fd<span class="w"> </span>&lt;folder&gt;
+git<span class="w"> </span>clean<span class="w"> </span>-fd<span class="w"> </span>data/temp/
+</code></pre></div>
+<h3 id="run-git-reset-hard-on-files-you-needed">Run git reset hard on files you needed<a class="headerlink" href="#run-git-reset-hard-on-files-you-needed" title="Permanent link">&para;</a></h3>
+<h2 id="-may-not-be-totally-out-of-luck-if-a-lot-of-time-has-not-passed">- May not be totally out of luck if a lot of time has not passed<a class="headerlink" href="#-may-not-be-totally-out-of-luck-if-a-lot-of-time-has-not-passed" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>reflog
+<span class="c1"># Grab the hash before the reset</span>
+git<span class="w"> </span>checkout<span class="w"> </span>&lt;hash&gt;
+</code></pre></div>
+<h3 id="git-revert-undo-commit-but-other-people-have-pulled-the-changes"><code>git revert</code> : Undo commit but other people have pulled the changes<a class="headerlink" href="#git-revert-undo-commit-but-other-people-have-pulled-the-changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>You should not change the git history if other peopl have pulled those changes already</li>
+<li><code>revert</code> creates new commits to reverse the effect of some earlier commits</li>
+<li>You dont re write any history. This does not modify or delete the existing commits we have made.</li>
+<li>It creates <strong>new commits</strong> on top of the existing commits that comepletely undo all of the changes, so our history remains intact.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># revert a commit</span>
+git<span class="w"> </span>log
+<span class="c1"># Get hash of the commit you want to undo</span>
+git<span class="w"> </span>revert<span class="w"> </span>&lt;hash&gt;
+<span class="c1"># Save exit</span>
+
+<span class="c1"># Latest commit shows 'Revert "Commit Message"'</span>
+git<span class="w"> </span>log
+</code></pre></div>
+<h3 id="git-diff"><code>git diff</code><a class="headerlink" href="#git-diff" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Shows the difference between</li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w"> </span>d63a377c<span class="w"> </span>d63a37890
+</code></pre></div>
+<h2 id="example-pushed-commit-to-the-wrong-branch">Example: pushed commit to the wrong branch<a class="headerlink" href="#example-pushed-commit-to-the-wrong-branch" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. See what's on the current (wrong) branch and confirm the commit that needs to move</span>
+git<span class="w"> </span>status
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>-3
+
+<span class="c1"># 2. Fetch to make sure the target branch ref is up to date locally</span>
+git<span class="w"> </span>fetch<span class="w"> </span>origin
+
+<span class="c1"># 3. Create a local branch tracking the *correct* remote branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>fix/missing-abstract-csv-322<span class="w"> </span>origin/fix/missing-abstract-csv-322
+
+<span class="c1"># 4. Cherry-pick the misplaced commit onto the correct branch</span>
+git<span class="w"> </span>cherry-pick<span class="w"> </span>&lt;commit-sha&gt;
+
+<span class="c1"># 4a. If conflicts occur, resolve them in the flagged files, then:</span>
+git<span class="w"> </span>add<span class="w"> </span>&lt;resolved-file&gt;
+git<span class="w"> </span>cherry-pick<span class="w"> </span>--continue
+<span class="c1"># (git cherry-pick --abort would bail out instead, if needed)</span>
+
+<span class="c1"># 5. Push the corrected branch</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>fix/missing-abstract-csv-322
+
+<span class="c1"># 6. Switch back to the branch that had the mistaken commit</span>
+git<span class="w"> </span>checkout<span class="w"> </span>feat/csv-converter-cli-config
+
+<span class="c1"># 7. Revert the commit there (adds a new "revert" commit — does NOT rewrite history)</span>
+git<span class="w"> </span>revert<span class="w"> </span>--no-edit<span class="w"> </span>&lt;commit-sha&gt;
+
+<span class="c1"># 8. Sanity-check the branch is back to its pre-mistake state</span>
+git<span class="w"> </span>diff<span class="w"> </span>&lt;last-good-commit&gt;<span class="w"> </span>HEAD<span class="w"> </span>--<span class="w"> </span>&lt;affected-files&gt;<span class="w">   </span><span class="c1"># should be empty</span>
+
+<span class="c1"># 9. Push the revert</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feat/csv-converter-cli-config
+</code></pre></div>
+<h2 id="example-switch-to-remote-branch-locally">Example: switch to remote branch locally<a class="headerlink" href="#example-switch-to-remote-branch-locally" title="Permanent link">&para;</a></h2>
+<p><div class="highlight"><pre><span></span><code>git<span class="w"> </span>fetch<span class="w"> </span>origin<span class="w">                    </span><span class="c1"># make sure you have the latest remote refs</span>
+git<span class="w"> </span>checkout<span class="w"> </span>&lt;branch-name&gt;<span class="w">          </span><span class="c1"># e.g. git checkout fix/218-verbatim-text-output</span>
+</code></pre></div>
+If the branch doesn't exist locally yet, modern git (2.23+) will auto-create a local tracking branch from origin/<branch-name> as long as the name is unambiguous — so git checkout <branch-name> alone usually just works. That's shorthand for:</p>
+<p><code>git checkout -b &lt;branch-name&gt; origin/&lt;branch-name&gt;</code></p>
+<p>Use the explicit -b ... origin/... form when you want to be unambiguous, or when the short form fails (e.g. name collision with a local branch, or git version too old for the auto-tracking shortcut).</p>
+<p>If you're using the newer worktree-style syntax, <code>git switch &lt;branch-name&gt;</code> is the more modern equivalent of git checkout <branch-name> for this purpose.</p>
+<table>
+<thead>
+<tr>
+<th>checkout</th>
+<th>switch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>git checkout &lt; branch &gt;</td>
+<td>git switch &lt; branch &gt;</td>
+</tr>
+<tr>
+<td>git checkout -b &lt; new &gt;</td>
+<td>git switch -c &lt; new &gt;</td>
+</tr>
+</tbody>
+</table>
+<h1 id="example-untrack-a-file">Example untrack a file<a class="headerlink" href="#example-untrack-a-file" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code>git rm --cached notebooks/config.env
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

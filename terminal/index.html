@@ -1,0 +1,1706 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Notes on developer tools and Python">
+      
+      
+      
+      
+        <link rel="prev" href="../git/fixing-mistakes/">
+      
+      
+        <link rel="next" href="../ssh/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Terminal - Workflows</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#terminal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Workflows" class="md-header__button md-logo" aria-label="Workflows" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Workflows
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Terminal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Workflows" class="md-nav__button md-logo" aria-label="Workflows" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Workflows
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../git/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git/fixing-mistakes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fixing Git mistakes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../networks/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../python/apis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/async/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Async
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/oauth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OAuth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/pathlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pathlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/project-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../python/pydantic/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pydantic
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pydantic
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/pydantic/computed-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computed fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/re-module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    re module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#get-helpoptions-associated-with-a-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get help/options associated with a function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filesystems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filesystems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relative-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relative paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-copy-rename-and-delete-files-and-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create, copy, rename and delete files and directories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create, copy, rename and delete files and directories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renamemove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rename/move
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-things" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find things
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Find things">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtering-on-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering on metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-on-permissions-and-changing-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering on permissions and changing them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-on-jpg-images-and-deleting-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering on jpg images and deleting them
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grep-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grep command
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Grep command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipe-pass-results-to-grep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipe (pass) results to grep
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-regular-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use regular expressions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cURL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rsync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rsync
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="rsync">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sync-files-from-a-local-to-a-remote-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync files from a local to a remote machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-files-from-a-remote-to-a-local-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync files from a remote to a local machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cron-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cron jobs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keyboard-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyboard shortcuts
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="terminal">Terminal<a class="headerlink" href="#terminal" title="Permanent link">&para;</a></h1>
+<h2 id="get-helpoptions-associated-with-a-function">Get help/options associated with a function<a class="headerlink" href="#get-helpoptions-associated-with-a-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>man cp
+
+q  # to close
+</code></pre></div>
+<h2 id="filesystems">Filesystems<a class="headerlink" href="#filesystems" title="Permanent link">&para;</a></h2>
+<p>To list hidden files listed, add <code>-a</code> flag:</p>
+<div class="highlight"><pre><span></span><code>ls -a
+</code></pre></div>
+<p>To view more information/'long form' about our files add <code>-l</code>. This shows:
+1. Permissions
+2. User
+3. Group owner
+4. Date</p>
+<div class="highlight"><pre><span></span><code>ls -l
+
+# combines
+ls -la
+</code></pre></div>
+<h2 id="relative-paths">Relative paths<a class="headerlink" href="#relative-paths" title="Permanent link">&para;</a></h2>
+<p><code>.</code> = current directory</p>
+<p><code>..</code> = up 1 directory</p>
+<p><code>../..</code>= up 2 directory</p>
+<p><code>cd</code> or <code>cd ~</code> = go to the home dir</p>
+<h2 id="create-copy-rename-and-delete-files-and-directories">Create, copy, rename and delete files and directories<a class="headerlink" href="#create-copy-rename-and-delete-files-and-directories" title="Permanent link">&para;</a></h2>
+<h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># create
+touch test_file.txt
+
+# open
+open test_file.txt
+</code></pre></div>
+<h3 id="copy">Copy<a class="headerlink" href="#copy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cp test_file.txt copy_file.txt
+
+# Copy a directory into another directory
+cp -R TestDir/ CopyDir/
+
+# Copy the contents of a directory into another directory
+cp -R toy-robot/. study-location-robot
+</code></pre></div>
+<h3 id="renamemove">Rename/move<a class="headerlink" href="#renamemove" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># Rename
+mv test_file.txt orig_file.txt
+
+# Move file
+# Dont rename the file - just move it to a different dir
+mkdir SubDir1
+mv orig_file.txt SubDir1/
+
+# Rename it as well
+mv orig_file.txt SubDir1/test_file.txt
+</code></pre></div>
+<h3 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h3>
+<ul>
+<li>When using rm be careful. It does'nt go to the trashcan. When its gone, its gone.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>rm copy_file.txt
+
+rm -R CopyDir
+
+# To force delete add f
+rm -rf TestDir/
+</code></pre></div>
+<h2 id="find-things">Find things<a class="headerlink" href="#find-things" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code># find all the directories and no files in the current dir
+find . -type d
+</code></pre></div>
+<div class="highlight"><pre><span></span><code># find all the files and no directories in the current dir
+find . -type f
+</code></pre></div>
+<div class="highlight"><pre><span></span><code># Search for an exact filename
+find . -type f "test_1.txt"
+find . -type f "*.py"
+</code></pre></div>
+<div class="highlight"><pre><span></span><code># Find files which start with test
+find . -type f -name "test*"
+</code></pre></div>
+<div class="highlight"><pre><span></span><code># Case insensitive
+find . -type f -iname "test*"
+</code></pre></div>
+<h3 id="filtering-on-metadata">Filtering on metadata<a class="headerlink" href="#filtering-on-metadata" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># All files modified in the last 10 minutes
+# -10 = less than 10 minutes
+# +10 = more than 10 minutes
+
+
+find . -type f -mmin -10
+
+# More than 10 min ago and less than 5 min ago
+
+find . -type f -mmin +1 -mmin -5
+
+# more than days ago +mtype20
+# modified days
+find . -type f -mtime +20
+</code></pre></div>
+<div class="highlight"><pre><span></span><code># Find by size over 5mb
+find . -size +5M
+
+find . -empty
+</code></pre></div>
+<h3 id="filtering-on-permissions-and-changing-them">Filtering on permissions and changing them<a class="headerlink" href="#filtering-on-permissions-and-changing-them" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># By permissions read/write/execute permissions
+find . -perm 777
+
+# change user and group using execute chown (change owner); {} placeholder; + ends command
+
+find Wensite_Demo -exec coreyshaffer:www-data {} +
+
+# Run another commad to change permissions
+find Wensite_Demo -type d -exec chmod 775 {} +
+
+find Wensite_Demo -type f chmod 666 {} +
+</code></pre></div>
+<h3 id="filtering-on-jpg-images-and-deleting-them">Filtering on jpg images and deleting them<a class="headerlink" href="#filtering-on-jpg-images-and-deleting-them" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># Delete all img files that ends in .jpg and is at max 1 folder down
+
+find . -type f -name "*.jpeg" - maxdepth 1 - exec rm {} +
+</code></pre></div>
+<h2 id="grep-command">Grep command<a class="headerlink" href="#grep-command" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Global regular expression print</li>
+<li>Allows us to search for text within files on our system</li>
+<li>When there are no results , it just jumps to the next line</li>
+</ul>
+<p>Example, seach a if 'Jane Williams' is within a file</p>
+<div class="highlight"><pre><span></span><code>grep 'Jane Williams' names.txt
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>#  Only return whole words (dont return Jane Williamson)
+grep -w "Jane William" names.txt
+
+# Make it cases insenstive
+grep -wi "Jane William" names.txt
+
+# Get line info
+grep -win "Jane William" names.txt
+</code></pre></div>
+<ul>
+<li>See a certain number of lines before the match</li>
+</ul>
+<div class="highlight"><pre><span></span><code># Returns 4 lines before the match
+grep -win -B 4 "Jane William" names.txt
+
+# Returns 4 lines after the match
+grep -win -A 4 "Jane William" names.txt
+
+# Returns 2 lines before and after the match = context
+grep -win -C 2 "Jane William" names.txt
+</code></pre></div>
+<ul>
+<li>Searching in all files in the current directory</li>
+</ul>
+<div class="highlight"><pre><span></span><code>grep -win -A 4 "Jane William" ./*
+
+# Only in the text files
+grep -win -A 4 "Jane William" ./*.txt
+
+# search in every single file and subdirectories
+grep -winr -A 4 "Jane William" ./
+</code></pre></div>
+<ul>
+<li>
+<p>Only return the files with matches, not the matches themselves
+<div class="highlight"><pre><span></span><code>grep - wirl -A 4 "Jane William" .
+</code></pre></div></p>
+</li>
+<li>
+<p>Number of matches in each file</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>grep -wirc "Jane William"
+</code></pre></div>
+<h3 id="pipe-pass-results-to-grep">Pipe (pass) results to grep<a class="headerlink" href="#pipe-pass-results-to-grep" title="Permanent link">&para;</a></h3>
+<ul>
+<li>search our history for git commits</li>
+</ul>
+<div class="highlight"><pre><span></span><code>history | grep "git commit"
+
+history | grep "git commit" | grep "dotfile"
+</code></pre></div>
+<h2 id="use-regular-expressions">Use regular expressions<a class="headerlink" href="#use-regular-expressions" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>grep "...-...-...." names.text
+</code></pre></div>
+<h2 id="curl">cURL<a class="headerlink" href="#curl" title="Permanent link">&para;</a></h2>
+<p>Allows us to:
+- query urls from the command line
+- post form data
+- authenticate users
+- save responses to files
+- test connection speeds
+- test rest APIs; will return some json
+- can use different http methods when requesting a url</p>
+<div class="highlight"><pre><span></span><code># Include header info (-i = include)
+curl -i http://localhost:5000/methods
+
+# Post info -fill a form (-d = data)
+curl -d "firs=Corey&amp; last=Shaffer" http://localhost:5000/methods
+
+# Update data -- put method
+curl -X PUT "firs=Corey&amp; last=Shaffer" http://localhost:5000/methods
+
+# authentication - provide username and password
+curl -u corey:pass http://localhost:5000/secret
+</code></pre></div>
+<ul>
+<li>Download the response
+<div class="highlight"><pre><span></span><code># Download response (-o output)
+curl -o test.jpeg http://localhost:5000/download
+open test.jpeg
+
+curl -o commits.json some_website
+</code></pre></div></li>
+</ul>
+<h2 id="rsync">rsync<a class="headerlink" href="#rsync" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Allows you to transfer and sync files efficiently across directories and machines</li>
+<li>More efficient than copying files</li>
+<li>Only syncs files that are different</li>
+</ul>
+<div class="highlight"><pre><span></span><code>rsync Original/* Backup/
+
+# Sync the contents of the entire dir
+rsync -r Original/ Backup/
+
+# Sync the actual dir - Orignal dir
+rsync -r Original Backup/
+
+# archime maintains permissions
+rsync -a Original Backup/
+</code></pre></div>
+<ul>
+<li>Check before you sync</li>
+<li>dry run option + verbose option</li>
+</ul>
+<div class="highlight"><pre><span></span><code>rsync -av --dry-run Original Backup/
+</code></pre></div>
+<ul>
+<li>Mirror the source directory and delete anything extra that is in the Backup/ that is not in the Orignal/</li>
+</ul>
+<div class="highlight"><pre><span></span><code>rsync -av --delete --dry-run Original Backup/
+</code></pre></div>
+<h3 id="sync-files-from-a-local-to-a-remote-machine">Sync files from a local to a remote machine<a class="headerlink" href="#sync-files-from-a-local-to-a-remote-machine" title="Permanent link">&para;</a></h3>
+<ul>
+<li>transfering data over the network</li>
+<li>you have options to compress and see progress</li>
+</ul>
+<div class="highlight"><pre><span></span><code>rsync -zaP ~/source_dir @coreyms@192.168.56.100:~/public/
+
+# check everything got there
+ssh coreyms@192.168.56.100
+cd public/
+ls
+</code></pre></div>
+<h3 id="sync-files-from-a-remote-to-a-local-machine">Sync files from a remote to a local machine<a class="headerlink" href="#sync-files-from-a-remote-to-a-local-machine" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>rsync -zaP @coreyms@192.168.56.100:~/source destination/
+</code></pre></div>
+<h2 id="cron-jobs">Cron jobs<a class="headerlink" href="#cron-jobs" title="Permanent link">&para;</a></h2>
+<ul>
+<li>way to schedule commands to run on regular intervals</li>
+<li>can be paired with rsync</li>
+</ul>
+<p>Command substitution $()
+echo "Your current directory is $(pwd)"
+tput = to change color</p>
+<h2 id="keyboard-shortcuts">Keyboard shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Permanent link">&para;</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
