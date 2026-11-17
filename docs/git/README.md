@@ -20,15 +20,15 @@ cat .git/config
 
 ```
 git config --global user.name "Ishita Gopal"
-git config --global user.email "ishitagopal@gmail.com"
+git config --global user.email "xyz@gmail.com"
 ```
 
-- `--global`: Applies the configuration **globally** on this computer. Meaning, whenever you make a commit in *any* Git Repo on your computer, Git will record that commit as being authored by ishitagopal@gmail.com
+- `--global`: Applies the configuration **globally** on this computer. Meaning, whenever you make a commit in *any* Git Repo on your computer, Git will record that commit as being authored by xyz@gmail.com
 
 - **without** `--global`: If you want to set it only for one repository (not globally),
 
 ```
-git config user.email "ishitagopal@gmail.com"
+git config user.email "xyz@gmail.com"
 ```
 
 ## Set up SSH key-based authentication for GitHub
@@ -52,7 +52,7 @@ cat id_rsa.pub
 ssh -T git@github.com
 ```
 
-**Note:** *The test should return: Hi IshitaGopal! You've successfully authenticated, but GitHub does not provide shell access.*
+**Note:** *The test should return: Hi <NAME>! You've successfully authenticated, but GitHub does not provide shell access.*
 
 
 

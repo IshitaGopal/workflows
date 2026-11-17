@@ -41,6 +41,7 @@ nav:
       - SSH: ssh/README.md
       - Docker: docker/README.md
       - VS Code: vscode/README.md
+      - MkDocs: mkdocs/README.md
   - Concepts:
       - Networks: networks/README.md
       - Databases: databases/README.md
