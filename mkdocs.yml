@@ -5,7 +5,6 @@ theme:
   name: material
   features:
     - navigation.indexes      # a folder's README.md becomes its section page
-    - navigation.sections
     - navigation.top
     - search.highlight
     - content.code.copy
@@ -33,18 +32,16 @@ markdown_extensions:
 # Add new notes here. Page titles come from each file's "# " heading.
 nav:
   - Home: index.md
-  - Tools:
-      - Git:
-          - git/README.md
-          - git/fixing-mistakes.md
-      - Terminal: terminal/README.md
-      - SSH: ssh/README.md
-      - Docker: docker/README.md
-      - VS Code: vscode/README.md
-      - MkDocs: mkdocs/README.md
-  - Concepts:
-      - Networks: networks/README.md
-      - Databases: databases/README.md
+  - Git:
+      - git/README.md
+      - git/fixing-mistakes.md
+  - Terminal: terminal/README.md
+  - SSH: ssh/README.md
+  - Docker: docker/README.md
+  - VS Code: vscode/README.md
+  - MkDocs: mkdocs/README.md
+  - Networks: networks/README.md
+  - Databases: databases/README.md
   - Python:
       - APIs: python/apis/README.md
       - Async: python/async/README.md

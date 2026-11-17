@@ -45,7 +45,6 @@ theme:
   name: material
   features:
     - navigation.indexes   # a folder's README.md becomes the section page
-    - navigation.sections  # top-level groups shown as headings in the sidebar
     - content.code.copy    # copy button on code blocks
     - search.highlight
 
@@ -58,14 +57,13 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Git:
+  - Git:                       # a topic with several pages
       - git/README.md
       - git/fixing-mistakes.md
-  - Python:
-      - Pydantic: python/pydantic/README.md
+  - Pydantic: python/pydantic/README.md
 ```
 
-- **`nav` is optional.** Without it, MkDocs builds the sidebar from the folder names, but it capitalises them oddly ("Ssh", "Apis"). Listing pages by hand keeps proper names and lets you group topics.
+- **`nav` is optional.** Without it, MkDocs builds the sidebar from the folder names, but it capitalises them oddly ("Ssh", "Apis"). Listing pages by hand keeps proper names and controls the order.
 - **A bare path under a section** (`- git/README.md`) uses the page's own `#` heading as its title. `Title: path` overrides it.
 - **Dark mode** is the `palette` block in this repo's `mkdocs.yml`. Copy it as is.
 
