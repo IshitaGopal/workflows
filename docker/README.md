@@ -3,53 +3,54 @@
 - https://www.youtube.com/watch?v=SXwC9fSwct8
 - https://www.youtube.com/watch?v=zFa9_K8BS8I&t=801s
 
-## Table of Contents
-- [When you install Docker Desktop, you get:](#when-you-install-docker-desktop-you-get)
-- [Docker Images vs Containers](#docker-images-vs-containers)
-- [Docker Registries (e.g., Docker Hub)](#docker-registries-eg-docker-hub)
-- [Private Docker Registeries](#private-docker-registeries)
-- [Registery vs Repository](#registery-vs-repository)
-- [Port Binding: How do we access this container?](#port-binding-how-do-we-access-this-container)
-- [Dockerfile: How to create a Docker image](#dockerfile-how-to-create-a-docker-image)
-  - [Image Layers](#image-layers)
+## Table of contents
+- [What you get with Docker Desktop](#what-you-get-with-docker-desktop)
+- [Docker images vs containers](#docker-images-vs-containers)
+- [Docker registries (e.g., Docker Hub)](#docker-registries-eg-docker-hub)
+- [Private Docker registries](#private-docker-registries)
+- [Registry vs repository](#registry-vs-repository)
+- [Port binding: how do we access this container?](#port-binding-how-do-we-access-this-container)
+- [Dockerfile: how to create a Docker image](#dockerfile-how-to-create-a-docker-image)
+  - [Image layers](#image-layers)
 - [Build Docker image from above definition](#build-docker-image-from-above-definition)
 - [Docker Compose](#docker-compose)
   - [Why Docker Compose?](#why-docker-compose)
   - [Without Docker Compose](#without-docker-compose)
+- [Multi-stage build](#multi-stage-build)
 
-## When you install Docker Desktop, you get:
+## What you get with Docker Desktop
 - **Docker Engine** = Docker service. The main part of Docker that enables virtualizations. It is a server that manages images and containers.
 - **Docker Client (CLI)**: The ``docker`` command you run in the terminal. Talks with Docker Engine via the REST API.
 - **GUI Client**: Also comes with the GUI. These are visual front-ends that also talk to Docker Engine.
 - **Docker Registery**: storage + distribution system for Docker images.
 
-## Docker Images vs Containers
+## Docker images vs containers
 
-- **Image** 
-    - A packaged, read-only template that contains the directories, files, application code, dependencies, runtime, system libraries, and configuration needed to run the application. 
+- **Image**
+    - A packaged, read-only template that contains the directories, files, application code, dependencies, runtime, system libraries, and configuration needed to run the application.
     - The image is the artifact that Docker builds.
     - Images do not typically store environment variable values (especially secrets). Those are passed into the container at runtime using .env (`docker run -e ENV_NAME=value myimage`), docker-compose.yml etc.
 
-- **Container** 
+- **Container**
     - Image -> Container. This is where the image runs. A running instance of an image = container.
-    - We take the package/image -> download it to a local laptop/server -> run it -> runs in a container. 
-    - From the same image we can run multiple containers. 
+    - We take the package/image -> download it to a local laptop/server -> run it -> runs in a container.
+    - From the same image we can run multiple containers.
     - Countainers are *Ephemeral* (can be started, stopped, deleted).
 
-```bash
+```zsh
 # What images do we have locally?
 docker images
 
 # List of running containers
 docker ps
 
-# List of all containers running or stopped 
+# List of all containers running or stopped
 # -a or -all = Lists all containers (stopped and running)
-docker ps -a 
+docker ps -a
 
 ```
 
-## Docker Registries (e.g., Docker Hub)
+## Docker registries (e.g., Docker Hub)
 
 * How do we get Docker images? → From a **Docker registry**.
 * A registry is a **storage + distribution system** for Docker images.
@@ -61,20 +62,20 @@ docker ps -a
 * Best practice: **specify a version tag**, not `latest`.
 * !`docker run` command **always creates a new container** unless you restart an existing one.
 
-```bash
+```zsh
 # Download image from Docker hub to run locally
 # docker pull name:tag
 docker pull nginx:1.23
 
-# Run image as a container 
+# Run image as a container
 docker run nginx:1.23
 
 # "start worker processes" in the printed logs indicates that the container is running.
 # id and name of the container are  assigned.
 
-# Run in detached mode: Runs image as a container in the background without blocking the terminal 
-# Use -d or --detach flag = detached mode 
-# Runs container in the background and prints the container id 
+# Run in detached mode: Runs image as a container in the background without blocking the terminal
+# Use -d or --detach flag = detached mode
+# Runs container in the background and prints the container id
 docker -d run nginx:1.23
 
 # Run commad without pulling..does not have to pull to have locally--can just use run and itll pull for us. Run directly.
@@ -88,16 +89,16 @@ docker logs 5d39dfa24f4d
 
 ```
 
-## Private Docker Registeries 
+## Private Docker registries
 - Companies may not want images to be public → private registries.
 - AWS ECR = Elastic Container Registeries which provides storage.
 - Docker Hub also supports **private registries** → create an account and store private/public images.
 
-## Registery vs Repository
+## Registry vs repository
 - **Repository**: A collection inside a registry for one application. Each app gets its own **repository**, and inside it you store **multiple image versions/tags**.
 
 
-## Port Binding: How do we access this container? 
+## Port binding: how do we access this container?
 * Containers run inside an isolated Docker network → cannot be accessed from your local machine by default → need **port binding**.
 * Each app inside a container runs on a specific **internal port** based on defaults (e.g., 80 for web servers).
 * Port binding maps **container port → host port** so you can access it from your machine, e.g.:
@@ -105,22 +106,22 @@ docker logs 5d39dfa24f4d
 * Example: `docker run -p 9000:80 nginx`
 
 
-```bash
+```zsh
 # Stop 1 or more running containers
-docker stop {container} 
+docker stop {container}
 docker stop 5c8facc9cd21
 
-# Port binding 
+# Port binding
 # Accessible to us at port 9000
 # Standard practice to use the same port on the local machine but you can bind to other ports
 # host 9000 → container 80
 docker run -d -p 9000:80 nginx:1.23
 
-# List of all containers running or stopped 
+# List of all containers running or stopped
 # -a or -all = Lists all containers (stopped and running)
-docker ps -a 
+docker ps -a
 
-# Restart a container 
+# Restart a container
 docker start {container} #  = Start 1 or more running containers
 docker stop 5c8facc9cd21
 
@@ -130,22 +131,22 @@ docker stop 5c8facc9cd21
 docker run --name web-app -d -p 9000:80 nginx:1.23
 ```
 
-## Dockerfile: How to create a Docker image
+## Dockerfile: how to create a Docker image
 - Dockerfile → build → Image → Run → Container.
 Say an application is ready  and we want to make it available to users by running it on a server:
 - We need to create a **definition** of how to build an image from our application. This is written in a **Dockerfile**
 - Dockerfile is a text document that conatines commands to assemble an image.
 - Docker can then build an image by reading those instructions.
-- Dockerfile **starts from a parent image or "base image"**. Most of these base images are linux based and we build on top of this. These are defined using `FROM`. `FROM` is the 1st **directive** in the Docker file. 
-- All **directives are written in caps**. 
-- We map everything we would do to run the application locally inside the container -- write any linux command 
+- Dockerfile **starts from a parent image or "base image"**. Most of these base images are linux based and we build on top of this. These are defined using `FROM`. `FROM` is the 1st **directive** in the Docker file.
+- All **directives are written in caps**.
+- We map everything we would do to run the application locally inside the container -- write any linux command
 - `RUN`: Will execute any command in a shell inside the container environment (e.g. installing dependencies). Each `RUN` creates a new image layer.
 - `WORKDIR`: Sets the working directory for any following instructions (`RUN`, `COPY`, `CMD`, ...) — similar to `cd`. Created automatically if it doesn't exist.
 - Next, we need application code → take files from local folder and copy them into the container.
 - `COPY <src> <dest>`: Copies files/folders from the host into the image. Copying dependency manifests (e.g. `package.json`) before the rest of the code lets Docker cache the install step on rebuilds.
 - `CMD`: The default command run when a container starts from this image. Only takes effect once — the last `CMD` in the file wins. Written in exec form: `["executable", "arg1", "arg2"]`.
 
-### Image Layers
+### Image layers
 - An image is a **stack of layers**, not one solid blob. Most instructions (`FROM`, `RUN`, `COPY`, `ADD`) each add one new layer on top of the previous ones.
 - Docker **caches each layer**. On rebuild, if an instruction is unchanged, Docker reuses its cached layer instead of re-running it. The first *changed* instruction forces that layer, and every layer after it, to rebuild.
 
@@ -196,7 +197,7 @@ EXPOSE 8000
 CMD ["uv", "run", "main.py"]
 ```
 
-## Build Docker image from above definition 
+## Build Docker image from above definition
 
 - `docker build -t <name>:<tag> <path>` reads the Dockerfile at `<path>` (`.` = current dir, i.e. build context) and produces a new image.
 - Rebuilding with the same `name:tag` doesn't create a second image — it replaces what that tag points to (the old image becomes untagged/"dangling" unless something else still references it).
@@ -235,7 +236,7 @@ docker run -d -p 8000:8000 --name my-app-container my-app:1.0
 
 ### Without Docker Compose
 
-```bash
+```zsh
 # Need Docker installed and running
 # 1) Create Docker Network
 # where 2 containers run and talk to each other
@@ -263,3 +264,7 @@ mongo-express
 ```
 
 - `docker compose exec` — run a command inside an already-running container (as opposed to `docker compose run`, which spins up a fresh one).
+
+## Multi-stage build
+
+is a Dockerfile that uses more than one FROM instruction so you can build or collect things in one stage, then copy only what you need into the final image.
