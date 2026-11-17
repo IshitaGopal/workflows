@@ -1,0 +1,60 @@
+site_name: Workflows
+site_description: Notes on developer tools and Python
+
+theme:
+  name: material
+  features:
+    - navigation.indexes      # a folder's README.md becomes its section page
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+# Add new notes here. Page titles come from each file's "# " heading.
+nav:
+  - Home: index.md
+  - Tools:
+      - Git:
+          - git/README.md
+          - git/fixing-mistakes.md
+      - Terminal: terminal/README.md
+      - SSH: ssh/README.md
+      - Docker: docker/README.md
+      - VS Code: vscode/README.md
+  - Concepts:
+      - Networks: networks/README.md
+      - Databases: databases/README.md
+  - Python:
+      - APIs: python/apis/README.md
+      - Async: python/async/README.md
+      - CSV: python/csv/README.md
+      - OAuth: python/oauth/README.md
+      - OOP: python/oop/README.md
+      - Pathlib: python/pathlib/README.md
+      - Project structure: python/project-structure/README.md
+      - Pydantic:
+          - python/pydantic/README.md
+          - python/pydantic/computed-fields.md
+      - re module: python/re-module/README.md
+      - Server: python/server/README.md
+      - Style guide: python/style-guide/README.md
