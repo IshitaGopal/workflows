@@ -92,11 +92,25 @@ uv run mkdocs gh-deploy
 
 This builds the site and pushes it to a `gh-pages` branch, which GitHub Pages serves at `https://<user>.github.io/<repo>/`. **The site is public**, so remove emails, keys and other personal details first.
 
+**First time only:** on GitHub, open the repo's Settings → Pages and check the source is *Deploy from a branch*, branch `gh-pages`, folder `/ (root)`.
+
+**Updating the site:** `git push` does **not** update the site. It only updates `main`. The site comes from the `gh-pages` branch, which only `gh-deploy` writes to. After every change:
+
+```bash
+git push                  # 1. save your notes to main
+uv run mkdocs gh-deploy   # 2. rebuild and publish the site
+```
+
+`gh-deploy` builds from your **local files**, so commit and push first. Otherwise the site can show changes that aren't on GitHub yet.
+
+To see what's live, run `git log -1 origin/gh-pages`. The message says which commit of `main` was deployed (e.g. `Deployed 8c02c98 with MkDocs version: 1.6.1`).
+
 ## Adding a note
 
 1. Create the `.md` file under `docs/`, starting with a `# Title`.
 2. Add it to `nav` in `mkdocs.yml`.
 3. Run `uv run mkdocs build --strict` to check it.
+4. Commit and push, then run `uv run mkdocs gh-deploy` to update the live site.
 
 !!! note "Material for MkDocs end of life"
     Material for MkDocs stops receiving fixes on May 5, 2027. Its successor, [Zensical](https://zensical.org), reads the same `mkdocs.yml`: `uv add --dev zensical`, then `uv run zensical serve`.
