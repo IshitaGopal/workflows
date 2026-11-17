@@ -1,4 +1,4 @@
-# Pathlib Notes
+# Pathlib
 
 ## Basics
 
@@ -17,7 +17,7 @@ my_file.suffix   # '.ipynb'
 my_file.parent   # get parent dir -> Path('notebooks')
 ```
 
-## Creating and Checking Paths
+## Creating and checking paths
 
 ```python
 # create a path (doesn't create the file yet)
@@ -28,7 +28,7 @@ new_file.absolute()  # get absolute path
 new_file.resolve()   # preferred — usually resolve paths instead of just joining them
 ```
 
-## Home Directory
+## Home directory
 
 ```python
 # Don't do this — won't expand "~" correctly:
@@ -59,7 +59,7 @@ for p in dotfiles.rglob("*.json", case_sensitive=False):
     print(p)
 ```
 
-## Opening Files
+## Opening files
 
 ```python
 # Pathlib's built-in open
@@ -71,7 +71,7 @@ with open(dotfiles) as f:
     print(f.read())
 ```
 
-## Creating, Moving, and Deleting
+## Creating, moving, and deleting
 
 Pathlib has *limited* ability to create, move, and delete files/dirs.
 
@@ -101,7 +101,7 @@ p = Path("temp_file.txt")
 p.unlink()
 ```
 
-## When NOT to Use Pathlib
+## When NOT to use pathlib
 
 Pathlib is great for representing and manipulating **paths**, but for actual
 filesystem operations beyond the basics, reach for `os` or `shutil` instead:

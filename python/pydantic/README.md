@@ -1,9 +1,9 @@
-# Pydantic 
+# Pydantic
 
 - Used in data processing for ensuring clean data
 - Used by Fast API 
 
-## Type Hints vs Type Checking vs Data Validation:
+## Type hints vs type checking vs data validation
 
 1. Type Hints: A way to annotate variables, function parameters, and return values with expected types. This **does not** enforce types at runtime; it’s purely informational.
 
@@ -67,10 +67,10 @@ user.model.dump() # python dictionary
 user.model.dump_json(indent=2) # json
 ```
 
-### Handling validation errors 
+### Handling validation errors
 - Some type coercion is enabled by default in pydantic. Pydantic will try to convert types when it makes sense to do so. '123' --> 123 automatically
 
-## Different types 
+## Different types
 - Supports all standard python types
 - We can use unions, optionals, literal types
 - Below we set a list of **tags** with defaults
@@ -105,7 +105,7 @@ class BlogPost(BaseModel):
 
 ```
 
-## Using Fields and Annotated 
+## Using Field and Annotated
 
 - Can be used to set defaults 
 - Add constraints, like, min, max, patterns, linked requirements. The reccomended way to do this is to use Annotated type form ```Typing```
@@ -162,7 +162,7 @@ user.password.get_secret_value()
 ```
 
 
-## Custom Validators 
+## Custom validators
 - Sometimes the built constraints in validation are not enough, and you may want to add your own logic.
 - We can easily do this in Pydantic with decorators.
 - *After validation*
@@ -252,7 +252,7 @@ class USerRegistration(BaseModel):
 
 ```
 
-### Best Practices for validators
+### Best practices for validators
 - Always return the values even if you are not modeifying it or raise an error
 - You usually want to raise a ValueError for validation errors. - Pydantic converts it into a ValidationError automatially.
 - If you are going to raise an error, don't mutate the value first. Either return the modified value or raise an error, but not both.

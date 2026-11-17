@@ -1,7 +1,7 @@
 # Git
 
 
-## Configuring your Git Profile
+## Configuring your Git profile
 
 You need to configure your git client so your commits are attributed to you
 
@@ -56,7 +56,7 @@ ssh -T git@github.com
 
 
 
-## Initializing a git repository
+## Initializing a Git repository
 
 **Option 1:** Make a new dir and then initalize it as a git repo
 ```
@@ -78,7 +78,7 @@ git clone path/to/repo
 ```
 
 
-## Typical Workflow
+## Typical workflow
 
 1. Make sure you have the latest copy of the repo.
 
@@ -161,7 +161,7 @@ Delete a file or director from the repo. Removing files via git allows them to b
 git rm {filename}
 git rm -r {directory}
 ```
-## Get Logs
+## Get logs
 To just get logs or just titles of commit messages
 ```
 git log
@@ -184,7 +184,7 @@ git remove origin
 This file will allow us to tell git which files/directories we don't want to be part of the repo ever. This is useful for keeping credentials, data etc. out of your github repo.
 
 
-# Github flow
+## GitHub flow
 
 - https://www.youtube.com/watch?v=hG_P6IRAjNQ
 
@@ -196,7 +196,7 @@ This file will allow us to tell git which files/directories we don't want to be 
 
 
 
-### Git: Merge vs Rebase
+### Merge vs rebase
 
 - **Rebase** = clean linear history, use on your own local/feature branches
 - **Merge** = preserves full history, use on shared branches
@@ -225,7 +225,7 @@ git merge origin/main
 git push origin your-feature-branch
 
 ```
-### Key Rules
+### Key rules
 - ✅ Solo on branch → rebase + force push is fine
 - ✅ Use `--force-with-lease` instead of `--force` (safer)
 - ❌ Never rebase a branch others are committing on top of

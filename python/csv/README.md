@@ -1,4 +1,4 @@
-# CSV Module Notes
+# CSV
 
 ## Reading a CSV
 
@@ -14,7 +14,7 @@ with open("data.csv", newline="") as f:
 > Always pass `newline=""` when opening files for `csv` — it prevents extra
 > blank lines being inserted on Windows.
 
-## Reading with Headers — DictReader
+## Reading with headers — DictReader
 
 ```python
 with open("data.csv", newline="") as f:
@@ -39,7 +39,7 @@ with open("out.csv", "w", newline="") as f:
     ])
 ```
 
-## Writing with Headers — DictWriter
+## Writing with headers — DictWriter
 
 ```python
 fieldnames = ["name", "age"]
@@ -54,7 +54,7 @@ with open("out.csv", "w", newline="") as f:
     ])
 ```
 
-## Dialects & Delimiters
+## Dialects & delimiters
 
 ```python
 # Custom delimiter (e.g. tab-separated)
@@ -72,7 +72,7 @@ Common `csv.reader`/`csv.writer` parameters:
 - `quoting` — quoting behavior
 - `skipinitialspace` — ignore whitespace after the delimiter
 
-## Sniffing an Unknown Format
+## Sniffing an unknown format
 
 ```python
 with open("data.csv", newline="") as f:
@@ -82,7 +82,7 @@ with open("data.csv", newline="") as f:
     reader = csv.reader(f, dialect)
 ```
 
-## When NOT to Use `csv`
+## When NOT to use `csv`
 
 For anything beyond simple read/write, reach for **pandas** instead:
 

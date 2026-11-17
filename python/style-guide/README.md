@@ -1,4 +1,6 @@
-# Checklist
+# Style guide
+
+## Checklist
 
 Here’s a **simple 10-rule summary** you can keep in mind when naming things in Python.
 

@@ -1,3 +1,5 @@
+# Fixing Git mistakes
+
 - https://www.youtube.com/watch?v=FdZecVxzJbk&list=PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx&index=2
 
 * "Working directory is clean" msg = no untracked/modified files
@@ -23,7 +25,7 @@ git clone <url> .
 git branch -a
 ```
 
-## Git Push
+## Git push
 - commit changes locally -> push the changes to the remote repository
 
 ```bash
@@ -57,7 +59,7 @@ git commit -m "Divide Function"
 git push -u origin calc-divide
 ```
 
-## Merge??
+## Merge and delete a branch
 
 ```bash
 git checkout master main?
@@ -75,7 +77,7 @@ git branch -a
 ```
 
 
-### Made changes to a file but we dont want to keep any of the changes
+### Made changes to a file but don't want to keep any of them
 ```bash
 # Go back to the way things were
 # hack hack
@@ -90,7 +92,7 @@ git checkout
 - When the hash changes -> means it chaged the git history. We only want to do this if we are the only ones who have had access to the changes. If we pushed the changes for other users to see, we do not want to change the hsistory because it can cause problems. There are other ways to make corrections without changing the git history. But this is ok to do if we are the only ones who has seen it. Also leads to cleaner commits.
 - mostly do this only when you have not pushed your changes to other people
 
-### Accidently left of a file we meant to commit
+### Accidentally left out a file we meant to commit
 
 ```bash
 # Make it part of the last commit
@@ -132,7 +134,7 @@ git restore --staged app.py
 ```
 
 
-## Cherrypick
+## Cherry-pick
 - Made commit to the wrong branch
 - Move changes to a branch, revert master to initial state
 - `cherry-pick` does not delete commmits
@@ -151,7 +153,7 @@ git restore --staged app.py
 
 ```
 
-## Git Resets
+## Git reset
 soft:
 - reset back to the commit we specify + keeps changes in the staging directory
 ```bash

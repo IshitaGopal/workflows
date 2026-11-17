@@ -1,3 +1,5 @@
+# re module
+
 - Raw string - Just a string prefixed with an r. Tells Python not to handle back slashes in any special way. 
 
 

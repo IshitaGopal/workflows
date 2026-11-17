@@ -1,4 +1,6 @@
-## Starting a Simple Local Server in Python
+# Server
+
+## Starting a simple local server in Python
 
 ### Command
 
@@ -87,7 +89,7 @@ kill <PID>
 ---
 
 
-## Common Use Cases
+## Common use cases
 
 * Testing static websites
 * Viewing HTML/CSS locally
@@ -95,4 +97,3 @@ kill <PID>
 * Quick debugging without setup
 
 ---
-

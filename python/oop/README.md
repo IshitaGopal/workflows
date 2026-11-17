@@ -1,6 +1,6 @@
 # OOP
 
-## Class methods 
+## Class methods
 
 - **Regular methods:** automatically takes the instance as the first argument (called *self* by convention).
 - **Class methods:** automatically takes class as the first argument (called *cls* by convention). 
@@ -60,6 +60,6 @@ Employee.is_workday(my_date)
 
 ```
 
-## Inhertiance
+## Inheritance
 
 ## Decorators

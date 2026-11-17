@@ -1,3 +1,5 @@
+# APIs
+
 ## The core idea
 An **API** is just a server sitting somewhere (here: http://127.0.0.1:8000) that accepts requests over HTTP and sends back responses. A **client** is just the thing making those requests — in our case, a small Python object (httpx.Client, wrapped by destiny_sdk's OAuthClient) that knows the server's address and handles the boring plumbing (auth headers, JSON encoding) for you.
 
@@ -33,7 +35,7 @@ After this runs, `client` is just a variable holding a Python object — think o
 
 So the one-sentence version: the client object remembers the address and your credentials so every `client.get(...) / client.put(...)` call is just "send this data, get data back" — you never have to hand-write the raw HTTP request yourself.
 
-## Curl
+## curl
 curl is a command-line tool that does the exact same thing as `client.get(...)` in Python, except you type it straight into the terminal — no Python needed at all. It's the fastest way to just poke a URL and see what comes back.
 
 Here's what each one we ran actually did:

@@ -29,7 +29,7 @@ ls -l
 ls -la
 ```
 
-## Relative Paths
+## Relative paths
 ```.``` = current directory
 
 ```..``` = up 1 directory
@@ -38,9 +38,9 @@ ls -la
 
 ```cd``` or ```cd ~``` = go to the home dir
 
-## Create, copy, rename and delete files and dir:
+## Create, copy, rename and delete files and directories
 
-### Create:
+### Create
 ```
 # create
 touch test_file.txt
@@ -63,7 +63,7 @@ cp -R toy-robot/. study-location-robot
 
 ```
 
-### Rename/ Move
+### Rename/move
 ```
 # Rename
 mv test_file.txt orig_file.txt
@@ -162,7 +162,7 @@ find Wensite_Demo -type d -exec chmod 775 {} +
 find Wensite_Demo -type f chmod 666 {} +
 ```
 
-### Filtering on files and jpg images and and deleting them
+### Filtering on jpg images and deleting them
 ```
 # Delete all img files that ends in .jpg and is at max 1 folder down
 
@@ -310,7 +310,7 @@ rsync -av --dry-run Original Backup/
 rsync -av --delete --dry-run Original Backup/
 ```
 
-### sync files from a local and remote machine
+### Sync files from a local to a remote machine
 
 - transfering data over the network
 - you have options to compress and see progress
@@ -324,7 +324,7 @@ cd public/
 ls
 ```
 
-### sync files from a remote to a local machine
+### Sync files from a remote to a local machine
 ```
 rsync -zaP @coreyms@192.168.56.100:~/source destination/
 

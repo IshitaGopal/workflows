@@ -1,3 +1,5 @@
+# Project structure
+
 - https://www.youtube.com/watch?v=niMybnzmzqc
 
 - https://www.youtube.com/watch?v=e9yMYdnSlUA&t=269s
@@ -35,7 +37,7 @@ uv init
 `uv tree`: will show the dependency tree 
 `uv run main.py`: to run script without activating the viirtual envirnment or even when the environment has not been created (since pyroject.toml and uv.lock filea are there to recreate the environment)
 
-## If no pyproject.toml and you need to install manually:
+## If there's no pyproject.toml and you need to install manually
 ```bash
 uv venv
 source .venv/bin/activate

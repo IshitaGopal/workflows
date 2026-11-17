@@ -1,4 +1,4 @@
-# Computed Fields
+# Computed fields
 - Used when you want fields that are calculated/computed from other fields and you want them to be included when you serialize the model to a dictionary or json
 - Use a decorator @computed_field.
 - We can combine it with the @property decorator.
@@ -37,7 +37,7 @@ class User(BaseModel):
 
 ```
 
-# Nested Models 
+## Nested models
 - You can use other Pydantic models as field types, i.e., you can have models within models.
 - Pydantic will automatically validate everything recursively
 
@@ -56,7 +56,7 @@ class BlogPost(BaseModel):
 
 ```
 
-## What if we wanted to store the full author information instead of just the author id?
+### What if we wanted to store the full author information instead of just the author id?
 
 - We can use the User model as the type 
 - Below we replace ``author_id`` with ``author`` and set the type as ``User``. So data will have to pass the User validation checks.
@@ -103,7 +103,7 @@ BlogPost.model_validate(post_data)
 
 ```
 
-# Advanced serialization and working with json 
+## Advanced serialization and working with JSON
 
 - Working with APIs
     - External the external representation may use different field names  form internal Python names 
@@ -115,7 +115,7 @@ BlogPost.model_validate(post_data)
         - We dont have to change the whole model. Alias allows us to be a litle more flexible when loading/exporting data.
 
 
-# ConfigDict
+## ConfigDict
 ```python
 from pydantic import ConfigDict
 
@@ -171,7 +171,7 @@ User.model_validate_json(json_data)
 ```
 
 
-## Other ConfigDict Options 
+### Other ConfigDict options
 
 ```python 
 # Controling type coersion and making it strict mode Be very specific about type 
@@ -222,7 +222,7 @@ class User(BaseModel):
 
 ```
 
-## 
+### Validate on assignment
 ```python 
 # Revalidates anytime we make changes to values which it does not do by default. 
 class User(BaseModel):
@@ -237,7 +237,7 @@ class User(BaseModel):
     ....
 ```
 
-## Frozen models
+### Frozen models
 - Make models immutable 
 - Cant make changes to it once it is created  
 - data integrity 
