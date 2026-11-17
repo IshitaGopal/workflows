@@ -339,3 +339,5 @@ Command substitution $()
 echo "Your current directory is $(pwd)"
 tput = to change color
 
+
+## Keyboard shortcuts

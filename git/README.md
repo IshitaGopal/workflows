@@ -187,3 +187,94 @@ This file will allow us to tell git which files/directories we don't want to be 
 # Github flow
 
 - https://www.youtube.com/watch?v=hG_P6IRAjNQ
+
+
+## Merge
+
+- https://www.youtube.com/watch?v=0chZFIZLR_0
+- https://www.youtube.com/shorts/KiMsYF8fff8
+
+
+
+### Git: Merge vs Rebase
+
+- **Rebase** = clean linear history, use on your own local/feature branches
+- **Merge** = preserves full history, use on shared branches
+
+- **Note**: When you rebase, your local history diverges from the remote, so a normal git push gets rejected. You need to force push to overwrite the remote.
+
+    `--force` → overwrites the remote no matter what
+
+    `--force-with-lease` → overwrites the remote only if no one else has pushed to the branch since your last fetch
+
+```
+# Common Workflow (feature branch off main)
+# Before first push — main moves forward:
+git fetch origin
+git rebase origin/main
+git push origin your-feature-branch
+
+# After first push — main moves forward again:
+git fetch origin
+git rebase origin/main
+git push --force-with-lease origin your-feature-branch
+
+# If others are working on your branch — main moves forward:
+git fetch origin
+git merge origin/main
+git push origin your-feature-branch
+
+```
+### Key Rules
+- ✅ Solo on branch → rebase + force push is fine
+- ✅ Use `--force-with-lease` instead of `--force` (safer)
+- ❌ Never rebase a branch others are committing on top of
+- ⚠️  If others are building on your branch → use merge instead
+
+
+## Stash
+- Stash command is used when you have changes that you are not quite ready to commit.
+- You want to revert back (temporarily) to where you started
+- You dont know what to do with your changes yet.
+- Stash carries over from branch to branch
+
+Stash will save them to a temprary place and you can get back to them later on
+
+```bash
+# Save stash with a message
+git stash save "Worked on add function"
+
+# All stashes have ids and messages
+git stash list
+
+# Takes changes from the stash but does not get rid of the stash
+git stash apply stash@{0}
+
+# Grabs the latest stash + applies it + drops the stash
+git stash pop
+
+# Get rid of a stash
+git stash drop stash@{0}
+
+# Get rid of all stash
+git stash clear
+
+```
+
+Most likely case..
+You were on the wrong branch (say, main) and made changes that were supposed to be in another branch.
+
+```
+git checkout main
+
+## made some changs....
+
+# Stash the changes
+git stash save "Add function"
+
+# Go to correct branch
+git checkout add
+
+# Apply changes
+git stash pop
+```
