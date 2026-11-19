@@ -1,4 +1,4 @@
-# Datetime Notes
+# Datetime
 
 ## The Main Types
 
@@ -183,7 +183,7 @@ datetime.fromtimestamp(1_700_000_000, tz=timezone.utc)
 
 ---
 
-# Dates in Pandas
+## Dates in Pandas
 
 Pandas has its own types built on NumPy:
 
@@ -205,7 +205,7 @@ pd.Timestamp.today().normalize() # today at midnight
 pd.Timestamp("2026-11-19")
 ```
 
-## Parsing: str column → datetime column
+### Parsing: str column → datetime column
 
 ```python
 df = pd.DataFrame({"date": ["2026-11-19", "2026-11-20", "2026-11-21"],
@@ -230,7 +230,7 @@ pd.to_datetime(df["date"], errors="coerce")
 pd.to_datetime(df["ts"], unit="s")
 ```
 
-### Parse while reading the CSV
+#### Parse while reading the CSV
 
 ```python
 df = pd.read_csv("sales.csv", parse_dates=["date"])
@@ -242,7 +242,7 @@ df = pd.read_csv("sales.csv", parse_dates=["date"], date_format="%d/%m/%Y")
 > If a date column shows `str` or `object` dtype after loading, it's still strings —
 > none of the `.dt` methods will work until you `pd.to_datetime` it.
 
-## The `.dt` Accessor
+### The `.dt` Accessor
 
 On a datetime column, `.dt` exposes the same components as Python dates:
 
@@ -259,7 +259,7 @@ df["date"].dt.date              # plain Python date objects
 df["date"].dt.normalize()       # drop the time, keep datetime64 dtype
 ```
 
-## datetime column → str column
+### datetime column → str column
 
 ```python
 df["date"].dt.strftime("%d %b %Y")   # '19 Nov 2026'
@@ -269,7 +269,7 @@ df["date"].dt.strftime("%Y-%m")      # '2026-11'
 > This turns the column back into strings. Do it last, only for display
 > or export — you lose sorting, filtering and arithmetic.
 
-## Filtering by Date
+### Filtering by Date
 
 ```python
 df[df["date"] >= "2026-11-20"]                   # strings are converted for you
@@ -282,7 +282,7 @@ s.loc["2026-11"]                  # whole month
 s.loc["2026-11-19":"2026-11-20"]  # range (inclusive both ends)
 ```
 
-## Date Arithmetic in Pandas
+### Date Arithmetic in Pandas
 
 ```python
 df["date"] + pd.Timedelta(days=7)
@@ -292,7 +292,7 @@ df["date"] + pd.DateOffset(months=1)        # calendar-aware months
 pd.Timestamp.today().normalize() - df["date"]   # age of each row
 ```
 
-## Generating Date Ranges
+### Generating Date Ranges
 
 ```python
 pd.date_range("2026-11-01", periods=5, freq="D")        # 5 days
@@ -304,7 +304,7 @@ pd.bdate_range("2026-11-16", "2026-11-20")               # business days
 Common frequency aliases: `D` day, `B` business day, `W` week,
 `MS`/`ME` month start/end, `QS`/`QE` quarter, `YS`/`YE` year, `h` hour.
 
-## Grouping by Time — `resample`
+### Grouping by Time — `resample`
 
 ```python
 s = df.set_index("date")
@@ -316,7 +316,7 @@ s["sales"].resample("ME").mean()   # monthly averages
 df.groupby(df["date"].dt.to_period("M"))["sales"].sum()
 ```
 
-## Timezones in Pandas
+### Timezones in Pandas
 
 ```python
 df["date"].dt.tz_localize("Europe/Berlin")   # naive -> aware (attach a tz)

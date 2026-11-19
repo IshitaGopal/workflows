@@ -46,6 +46,7 @@ nav:
       - APIs: python/apis/README.md
       - Async: python/async/README.md
       - CSV: python/csv/README.md
+      - Datetime: python/datetime/README.md
       - OAuth: python/oauth/README.md
       - OOP: python/oop/README.md
       - Pathlib: python/pathlib/README.md
