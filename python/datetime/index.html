@@ -1,0 +1,2072 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Notes on developer tools and Python">
+      
+      
+      
+      
+        <link rel="prev" href="../csv/">
+      
+      
+        <link rel="next" href="../oauth/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Datetime - Workflows</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#datetime" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Workflows" class="md-header__button md-logo" aria-label="Workflows" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Workflows
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Datetime
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Workflows" class="md-nav__button md-logo" aria-label="Workflows" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Workflows
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../git/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/fixing-mistakes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fixing Git mistakes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../terminal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mkdocs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MkDocs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../apis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Async
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datetime
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datetime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-main-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-todays-date-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Today's Date / Now
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#str-date-str-the-round-trip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        str → date → str (the round trip)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="str → date → str (the round trip)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iso-format-the-easy-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ISO format — the easy path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-format-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Format Codes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-dates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsing Dates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Date Arithmetic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Date Arithmetic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparing-replacing-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing, Replacing, Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timezones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timezones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unix-timestamps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unix Timestamps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dates-in-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dates in Pandas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dates in Pandas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parsing-str-column-datetime-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsing: str column → datetime column
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parsing: str column → datetime column">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse-while-reading-the-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parse while reading the CSV
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-dt-accessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The .dt Accessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datetime-column-str-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        datetime column → str column
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-by-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering by Date
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#date-arithmetic-in-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Date Arithmetic in Pandas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-date-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating Date Ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grouping-by-time-resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grouping by Time — resample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timezones-in-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timezones in Pandas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gotchas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oauth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OAuth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pathlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pathlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../pydantic/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pydantic
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10_9" id="__nav_10_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pydantic
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pydantic/computed-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computed fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../re-module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    re module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-main-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Main Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-todays-date-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Today's Date / Now
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#str-date-str-the-round-trip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        str → date → str (the round trip)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="str → date → str (the round trip)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iso-format-the-easy-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ISO format — the easy path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-format-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Format Codes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-dates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsing Dates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Date Arithmetic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Date Arithmetic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparing-replacing-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing, Replacing, Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timezones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timezones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unix-timestamps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unix Timestamps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dates-in-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dates in Pandas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dates in Pandas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parsing-str-column-datetime-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsing: str column → datetime column
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parsing: str column → datetime column">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse-while-reading-the-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parse while reading the CSV
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-dt-accessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The .dt Accessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datetime-column-str-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        datetime column → str column
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-by-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering by Date
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#date-arithmetic-in-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Date Arithmetic in Pandas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-date-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating Date Ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grouping-by-time-resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grouping by Time — resample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timezones-in-pandas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timezones in Pandas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gotchas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="datetime">Datetime<a class="headerlink" href="#datetime" title="Permanent link">&para;</a></h1>
+<h2 id="the-main-types">The Main Types<a class="headerlink" href="#the-main-types" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">timezone</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Holds</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date</code></td>
+<td>year, month, day</td>
+<td><code>date(2026, 11, 19)</code></td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>hour, minute, second, µs</td>
+<td><code>time(14, 30)</code></td>
+</tr>
+<tr>
+<td><code>datetime</code></td>
+<td>date + time (+ tz)</td>
+<td><code>datetime(2026, 11, 19, 14, 30)</code></td>
+</tr>
+<tr>
+<td><code>timedelta</code></td>
+<td>a duration</td>
+<td><code>timedelta(days=7, hours=2)</code></td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>a fixed UTC offset</td>
+<td><code>timezone.utc</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The module and the class share a name. <code>import datetime</code> then
+<code>datetime.datetime.now()</code>. Or <code>from datetime import datetime</code> then
+<code>datetime.now()</code>. Mixing the two styles is the most common mistake.</p>
+</blockquote>
+<h2 id="getting-todays-date-now">Getting Today's Date / Now<a class="headerlink" href="#getting-todays-date-now" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>                  <span class="c1"># date(2026, 11, 19)  — local date</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>                <span class="c1"># local date + time, *naive* (no timezone)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>    <span class="c1"># current UTC time, *aware* — prefer this</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>         <span class="c1"># just the date part</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>         <span class="c1"># just the time part</span>
+</code></pre></div>
+<blockquote>
+<p><code>datetime.utcnow()</code> is <strong>deprecated</strong> since Python 3.12 — use
+<code>datetime.now(timezone.utc)</code> instead.</p>
+</blockquote>
+<h2 id="str-date-str-the-round-trip">str → date → str (the round trip)<a class="headerlink" href="#str-date-str-the-round-trip" title="Permanent link">&para;</a></h2>
+<p>Two methods, easy to mix up:</p>
+<ul>
+<li><strong><code>strptime</code></strong> — string <strong>p</strong>arse time: <code>str</code> → <code>datetime</code></li>
+<li><strong><code>strftime</code></strong> — string <strong>f</strong>ormat time: <code>datetime</code> → <code>str</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># str -&gt; datetime</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"19/11/2026"</span><span class="p">,</span> <span class="s2">"</span><span class="si">%d</span><span class="s2">/%m/%Y"</span><span class="p">)</span>   <span class="c1"># datetime(2026, 11, 19, 0, 0)</span>
+
+<span class="c1"># datetime -&gt; date (drop the time)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>                                      <span class="c1"># date(2026, 11, 19)</span>
+
+<span class="c1"># date -&gt; str</span>
+<span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span>        <span class="c1"># '2026-11-19'</span>
+<span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2"> %B %Y"</span><span class="p">)</span>        <span class="c1"># '19 November 2026'</span>
+<span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"</span><span class="si">%a</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> %b"</span><span class="p">)</span>       <span class="c1"># 'Thu, 19 Nov'</span>
+
+<span class="c1"># f-strings accept the same format codes</span>
+<span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="s2">%d.%m.%Y</span><span class="si">}</span><span class="s2">"</span>               <span class="c1"># '19.11.2026'</span>
+</code></pre></div>
+<blockquote>
+<p>There is no <code>date.strptime</code> — parse with <code>datetime.strptime(...)</code> and then
+call <code>.date()</code>.</p>
+</blockquote>
+<h3 id="iso-format-the-easy-path">ISO format — the easy path<a class="headerlink" href="#iso-format-the-easy-path" title="Permanent link">&para;</a></h3>
+<p>If the string is ISO 8601 (<code>YYYY-MM-DD...</code>), skip format codes entirely:</p>
+<div class="highlight"><pre><span></span><code><span class="n">date</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="s2">"2026-11-19"</span><span class="p">)</span>                    <span class="c1"># date(2026, 11, 19)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="s2">"2026-11-19T14:30:00"</span><span class="p">)</span>       <span class="c1"># datetime(2026, 11, 19, 14, 30)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="s2">"2026-11-19T14:30:00+01:00"</span><span class="p">)</span> <span class="c1"># aware datetime (3.11+)</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>                                       <span class="c1"># '2026-11-19'</span>
+<span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>          <span class="c1"># '2026-11-19T14:30:00'</span>
+</code></pre></div>
+<blockquote>
+<p>Use ISO format whenever you control the format (filenames, APIs, CSVs).
+It sorts correctly as plain text and is unambiguous.</p>
+</blockquote>
+<h3 id="common-format-codes">Common Format Codes<a class="headerlink" href="#common-format-codes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%Y</code></td>
+<td>4-digit year</td>
+<td><code>2026</code></td>
+</tr>
+<tr>
+<td><code>%y</code></td>
+<td>2-digit year</td>
+<td><code>26</code></td>
+</tr>
+<tr>
+<td><code>%m</code></td>
+<td>month, zero-padded</td>
+<td><code>11</code></td>
+</tr>
+<tr>
+<td><code>%B</code></td>
+<td>full month name</td>
+<td><code>November</code></td>
+</tr>
+<tr>
+<td><code>%b</code></td>
+<td>short month name</td>
+<td><code>Nov</code></td>
+</tr>
+<tr>
+<td><code>%d</code></td>
+<td>day, zero-padded</td>
+<td><code>19</code></td>
+</tr>
+<tr>
+<td><code>%A</code></td>
+<td>full weekday</td>
+<td><code>Thursday</code></td>
+</tr>
+<tr>
+<td><code>%a</code></td>
+<td>short weekday</td>
+<td><code>Thu</code></td>
+</tr>
+<tr>
+<td><code>%H</code></td>
+<td>hour 00–23</td>
+<td><code>14</code></td>
+</tr>
+<tr>
+<td><code>%I</code></td>
+<td>hour 01–12</td>
+<td><code>02</code></td>
+</tr>
+<tr>
+<td><code>%p</code></td>
+<td>AM/PM</td>
+<td><code>PM</code></td>
+</tr>
+<tr>
+<td><code>%M</code></td>
+<td>minute</td>
+<td><code>30</code></td>
+</tr>
+<tr>
+<td><code>%S</code></td>
+<td>second</td>
+<td><code>05</code></td>
+</tr>
+<tr>
+<td><code>%z</code></td>
+<td>UTC offset</td>
+<td><code>+0100</code></td>
+</tr>
+<tr>
+<td><code>%j</code></td>
+<td>day of year</td>
+<td><code>323</code></td>
+</tr>
+</tbody>
+</table>
+<p>Full list: <a href="https://strftime.org">https://strftime.org</a></p>
+<h2 id="parsing-dates">Parsing Dates<a class="headerlink" href="#parsing-dates" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"2026-11-19 14:30"</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M"</span><span class="p">)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"Nov 19, 2026"</span><span class="p">,</span> <span class="s2">"%b </span><span class="si">%d</span><span class="s2">, %Y"</span><span class="p">)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"19.11.26"</span><span class="p">,</span> <span class="s2">"</span><span class="si">%d</span><span class="s2">.%m.%y"</span><span class="p">)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"2:30 PM"</span><span class="p">,</span> <span class="s2">"%I:%M %p"</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>    <span class="c1"># time(14, 30)</span>
+</code></pre></div>
+<p>The format must match the string <strong>exactly</strong>, or you get a <code>ValueError</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">"2026/11/19"</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>  <span class="c1"># time data '2026/11/19' does not match format '%Y-%m-%d'</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Ambiguity trap:</strong> <code>"03/04/2026"</code> is 3 April in Europe but March 4 in the
+US. Always know which convention your source uses — never guess.</p>
+</blockquote>
+<p>For messy or unknown formats, <code>dateutil</code> (installed with pandas) guesses:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dateutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">parser</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"19th Nov 2026 2:30pm"</span><span class="p">)</span>   <span class="c1"># datetime(2026, 11, 19, 14, 30)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"03/04/2026"</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 3 April</span>
+</code></pre></div>
+<h2 id="date-arithmetic">Date Arithmetic<a class="headerlink" href="#date-arithmetic" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+<span class="n">today</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>        <span class="c1"># one week from today</span>
+<span class="n">today</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>       <span class="c1"># two weeks ago</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span> <span class="o">-</span> <span class="n">today</span>   <span class="c1"># date - date -&gt; timedelta</span>
+<span class="n">delta</span><span class="o">.</span><span class="n">days</span>                            <span class="c1"># e.g. 36</span>
+
+<span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">minutes</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>   <span class="c1"># 5400.0</span>
+</code></pre></div>
+<blockquote>
+<p><code>timedelta</code> has no <code>months</code> or <code>years</code> — months vary in length.
+Use <code>dateutil.relativedelta</code> for that:</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dateutil.relativedelta</span><span class="w"> </span><span class="kn">import</span> <span class="n">relativedelta</span>
+<span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># date(2026, 2, 28) — clamps</span>
+</code></pre></div>
+<h3 id="comparing-replacing-components">Comparing, Replacing, Components<a class="headerlink" href="#comparing-replacing-components" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">d1</span> <span class="o">&lt;</span> <span class="n">d2</span>                          <span class="c1"># dates compare naturally</span>
+<span class="n">d</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">day</span>
+<span class="n">d</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span>                      <span class="c1"># Monday=0 ... Sunday=6</span>
+<span class="n">d</span><span class="o">.</span><span class="n">isoweekday</span><span class="p">()</span>                   <span class="c1"># Monday=1 ... Sunday=7</span>
+<span class="n">d</span><span class="o">.</span><span class="n">isocalendar</span><span class="p">()</span><span class="o">.</span><span class="n">week</span>             <span class="c1"># ISO week number</span>
+<span class="n">d</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                 <span class="c1"># first of the month</span>
+</code></pre></div>
+<h2 id="timezones">Timezones<a class="headerlink" href="#timezones" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>     <span class="c1"># standard library since 3.9</span>
+
+<span class="n">berlin</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">"Europe/Berlin"</span><span class="p">))</span>
+<span class="n">berlin</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">"Asia/Kolkata"</span><span class="p">))</span>   <span class="c1"># same instant, other zone</span>
+<span class="n">berlin</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><strong>Naive</strong> datetime: no <code>tzinfo</code>. Python doesn't know which timezone it is.</li>
+<li><strong>Aware</strong> datetime: has <code>tzinfo</code>.</li>
+<li>You <strong>cannot</strong> compare or subtract naive and aware datetimes — <code>TypeError</code>.</li>
+</ul>
+<blockquote>
+<p>Rule of thumb: store and compute in UTC, convert to local time only for
+display.</p>
+</blockquote>
+<h2 id="unix-timestamps">Unix Timestamps<a class="headerlink" href="#unix-timestamps" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>               <span class="c1"># float seconds since 1970</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="mi">1_700_000_000</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="dates-in-pandas">Dates in Pandas<a class="headerlink" href="#dates-in-pandas" title="Permanent link">&para;</a></h2>
+<p>Pandas has its own types built on NumPy:</p>
+<table>
+<thead>
+<tr>
+<th>Python</th>
+<th>Pandas</th>
+<th>Column dtype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>datetime</code></td>
+<td><code>pd.Timestamp</code></td>
+<td><code>datetime64[us]</code></td>
+</tr>
+<tr>
+<td><code>timedelta</code></td>
+<td><code>pd.Timedelta</code></td>
+<td><code>timedelta64[us]</code></td>
+</tr>
+<tr>
+<td>—</td>
+<td><code>pd.Period</code> (e.g. a month)</td>
+<td><code>period[M]</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The unit in brackets (<code>ns</code>, <code>us</code>, <code>s</code>) is the storage resolution. Pandas 2
+always used <code>ns</code>; pandas 3 picks a unit from the input (<code>us</code> when parsing
+strings). It rarely matters — just don't be surprised by either.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>               <span class="c1"># now</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span> <span class="c1"># today at midnight</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2026-11-19"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="parsing-str-column-datetime-column">Parsing: str column → datetime column<a class="headerlink" href="#parsing-str-column-datetime-column" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"date"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"2026-11-19"</span><span class="p">,</span> <span class="s2">"2026-11-20"</span><span class="p">,</span> <span class="s2">"2026-11-21"</span><span class="p">],</span>
+                   <span class="s2">"sales"</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">120</span><span class="p">]})</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>                    <span class="c1"># str (pandas 3) / object (pandas 2) — strings!</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>                    <span class="c1"># datetime64[us]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Specify the format — faster and avoids wrong guesses</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"</span><span class="si">%d</span><span class="s2">/%m/%Y"</span><span class="p">)</span>
+
+<span class="c1"># European day-first strings without a fixed format</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">],</span> <span class="n">dayfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Bad values become NaT (Not a Time) instead of raising</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"coerce"</span><span class="p">)</span>
+
+<span class="c1"># Unix timestamps</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"s"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="parse-while-reading-the-csv">Parse while reading the CSV<a class="headerlink" href="#parse-while-reading-the-csv" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"sales.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">"date"</span><span class="p">])</span>
+
+<span class="c1"># with a non-ISO format</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"sales.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">"date"</span><span class="p">],</span> <span class="n">date_format</span><span class="o">=</span><span class="s2">"</span><span class="si">%d</span><span class="s2">/%m/%Y"</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>If a date column shows <code>str</code> or <code>object</code> dtype after loading, it's still strings —
+none of the <code>.dt</code> methods will work until you <code>pd.to_datetime</code> it.</p>
+</blockquote>
+<h3 id="the-dt-accessor">The <code>.dt</code> Accessor<a class="headerlink" href="#the-dt-accessor" title="Permanent link">&para;</a></h3>
+<p>On a datetime column, <code>.dt</code> exposes the same components as Python dates:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>        <span class="c1"># 'Thursday'</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month_name</span><span class="p">()</span>      <span class="c1"># 'November'</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">weekday</span>           <span class="c1"># Monday=0</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">isocalendar</span><span class="p">()</span><span class="o">.</span><span class="n">week</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">quarter</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>              <span class="c1"># plain Python date objects</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>       <span class="c1"># drop the time, keep datetime64 dtype</span>
+</code></pre></div>
+<h3 id="datetime-column-str-column">datetime column → str column<a class="headerlink" href="#datetime-column-str-column" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2"> %b %Y"</span><span class="p">)</span>   <span class="c1"># '19 Nov 2026'</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m"</span><span class="p">)</span>      <span class="c1"># '2026-11'</span>
+</code></pre></div>
+<blockquote>
+<p>This turns the column back into strings. Do it last, only for display
+or export — you lose sorting, filtering and arithmetic.</p>
+</blockquote>
+<h3 id="filtering-by-date">Filtering by Date<a class="headerlink" href="#filtering-by-date" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="s2">"2026-11-20"</span><span class="p">]</span>                   <span class="c1"># strings are converted for you</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="s2">"2026-11-01"</span><span class="p">,</span> <span class="s2">"2026-11-30"</span><span class="p">)]</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span> <span class="o">==</span> <span class="mi">11</span><span class="p">]</span>
+
+<span class="c1"># With a DatetimeIndex you can slice with partial strings</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"date"</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"2026-11"</span><span class="p">]</span>                  <span class="c1"># whole month</span>
+<span class="n">s</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"2026-11-19"</span><span class="p">:</span><span class="s2">"2026-11-20"</span><span class="p">]</span>  <span class="c1"># range (inclusive both ends)</span>
+</code></pre></div>
+<h3 id="date-arithmetic-in-pandas">Date Arithmetic in Pandas<a class="headerlink" href="#date-arithmetic-in-pandas" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">DateOffset</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># calendar-aware months</span>
+<span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>      <span class="c1"># days since first date</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span>   <span class="c1"># age of each row</span>
+</code></pre></div>
+<h3 id="generating-date-ranges">Generating Date Ranges<a class="headerlink" href="#generating-date-ranges" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">"2026-11-01"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"D"</span><span class="p">)</span>        <span class="c1"># 5 days</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">"2026-01-01"</span><span class="p">,</span> <span class="s2">"2026-12-31"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">)</span>    <span class="c1"># month starts</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">"2026-01-01"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"W-MON"</span><span class="p">)</span>    <span class="c1"># Mondays</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">bdate_range</span><span class="p">(</span><span class="s2">"2026-11-16"</span><span class="p">,</span> <span class="s2">"2026-11-20"</span><span class="p">)</span>               <span class="c1"># business days</span>
+</code></pre></div>
+<p>Common frequency aliases: <code>D</code> day, <code>B</code> business day, <code>W</code> week,
+<code>MS</code>/<code>ME</code> month start/end, <code>QS</code>/<code>QE</code> quarter, <code>YS</code>/<code>YE</code> year, <code>h</code> hour.</p>
+<h3 id="grouping-by-time-resample">Grouping by Time — <code>resample</code><a class="headerlink" href="#grouping-by-time-resample" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"date"</span><span class="p">)</span>
+
+<span class="n">s</span><span class="p">[</span><span class="s2">"sales"</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">"W"</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>     <span class="c1"># weekly totals</span>
+<span class="n">s</span><span class="p">[</span><span class="s2">"sales"</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">"ME"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>   <span class="c1"># monthly averages</span>
+
+<span class="c1"># without setting the index</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">"M"</span><span class="p">))[</span><span class="s2">"sales"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="timezones-in-pandas">Timezones in Pandas<a class="headerlink" href="#timezones-in-pandas" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s2">"Europe/Berlin"</span><span class="p">)</span>   <span class="c1"># naive -&gt; aware (attach a tz)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s2">"UTC"</span><span class="p">)</span>              <span class="c1"># aware -&gt; another tz</span>
+</code></pre></div>
+<blockquote>
+<p><code>tz_localize</code> says "these times <em>are</em> in Berlin". <code>tz_convert</code> says
+"show this instant in another zone". Use <code>tz_convert</code> only on columns
+that already have a timezone.</p>
+</blockquote>
+<h2 id="gotchas">Gotchas<a class="headerlink" href="#gotchas" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>datetime</code> module vs <code>datetime</code> class — see the top of this note.</li>
+<li><code>strptime</code> parses, <code>strftime</code> formats.</li>
+<li><code>%m</code> is month, <code>%M</code> is minute.</li>
+<li>Day-first vs month-first strings — always specify <code>format=</code> or <code>dayfirst=</code>.</li>
+<li>Naive and aware datetimes can't be mixed.</li>
+<li>Store as ISO / UTC, convert for display.</li>
+<li>In pandas, check <code>df.dtypes</code> — <code>str</code>/<code>object</code> means the dates are still strings.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
